@@ -4,6 +4,16 @@
 
 > Like a cup of jasmine tea, it quietly makes web pages easier to read.
 
+## 📥 下载 / Download
+
+**[点击下载 v0.6.0 发行包 / Download v0.6.0 Release Package](https://github.com/xiaohuaihua/Jasmine-Translator/releases/download/v0.6.0/jasmine-translator-v0.6.0.zip)**
+
+下载后解压，然后在浏览器扩展页面"加载已解压的扩展程序"，选择解压出来的文件夹即可。
+
+After downloading, unzip it and load the extracted folder as an unpacked extension in Chrome or Edge.
+
+---
+
 ## Language
 
 - [中文说明](#中文说明)
@@ -25,20 +35,21 @@
 
 ## 安装方式
 
-### 方式一：Chrome Web Store / Edge Add-ons
+### 方式一：直接下载发行包（推荐）
+
+**[点击下载 jasmine-translator-v0.6.0.zip](https://github.com/xiaohuaihua/Jasmine-Translator/releases/download/v0.6.0/jasmine-translator-v0.6.0.zip)**
+
+下载后：
+
+1. 解压 ZIP 到本地文件夹。
+2. 打开 `chrome://extensions` 或 `edge://extensions`。
+3. 开启右上角的”开发者模式”。
+4. 点击”加载已解压的扩展程序”。
+5. 选择刚才解压出来、包含 `manifest.json` 的文件夹。
+
+### 方式二：Chrome Web Store / Edge Add-ons
 
 即将提供。
-
-### 方式二：从 GitHub Release 手动安装
-
-1. 下载最新的 release ZIP。
-2. 解压 ZIP 到本地文件夹。
-3. 打开 `chrome://extensions` 或 `edge://extensions`。
-4. 开启右上角的“开发者模式”。
-5. 点击“加载已解压的扩展程序”。
-6. 选择刚才解压出来、包含 `manifest.json` 的文件夹。
-
-> 注意：不要直接选择 ZIP 文件，要选择解压后的文件夹。
 
 ## 快速开始
 
@@ -126,20 +137,21 @@ Jasmine Translator is a lightweight AI web page translator for Chrome and Edge. 
 
 ## Install
 
-### Option 1: Chrome Web Store / Edge Add-ons
+### Option 1: Download release package (recommended)
+
+**[Download jasmine-translator-v0.6.0.zip](https://github.com/xiaohuaihua/Jasmine-Translator/releases/download/v0.6.0/jasmine-translator-v0.6.0.zip)**
+
+After downloading:
+
+1. Unzip it to a local folder.
+2. Open `chrome://extensions` or `edge://extensions`.
+3. Enable **Developer mode**.
+4. Click **Load unpacked**.
+5. Select the extracted folder that contains `manifest.json`.
+
+### Option 2: Chrome Web Store / Edge Add-ons
 
 Coming soon.
-
-### Option 2: Manual install from GitHub Release
-
-1. Download the latest release ZIP.
-2. Unzip it to a local folder.
-3. Open `chrome://extensions` or `edge://extensions`.
-4. Enable **Developer mode**.
-5. Click **Load unpacked**.
-6. Select the extracted folder that contains `manifest.json`.
-
-> Do not select the ZIP file directly. Select the extracted folder instead.
 
 ## Quick start
 
