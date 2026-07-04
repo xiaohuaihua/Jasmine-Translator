@@ -1,0 +1,8 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 128 128" role="img" aria-label="AI Translator">
+  <rect width="128" height="128" rx="28" fill="#176b58"/>
+  <path d="M28 94 L54 30 H74 L100 94 H82 L77 80 H51 L46 94 Z" fill="#ffffff"/>
+  <path d="M56 66 H72 L64 44 Z" fill="#176b58"/>
+  <rect x="72" y="70" width="42" height="34" rx="10" fill="#a7e8c8"/>
+  <path d="M82 82 H104" stroke="#176b58" stroke-width="6" stroke-linecap="round"/>
+  <path d="M82 93 H98" stroke="#176b58" stroke-width="6" stroke-linecap="round"/>
+</svg>

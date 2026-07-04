@@ -1,0 +1,132 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>花茶翻译器 · 设置</title>
+    <link rel="stylesheet" href="options.css">
+  </head>
+  <body>
+    <main class="page">
+      <header class="page-header">
+        <h1>花茶翻译器</h1>
+        <p>配置 TokenDance 或其他 OpenAI 兼容接口</p>
+      </header>
+
+      <form id="settingsForm" class="settings">
+        <section class="section">
+          <div class="section-title-row">
+            <h2>中转 / 聚合</h2>
+            <span id="providerState">未测试</span>
+          </div>
+
+          <label class="field">
+            <span>服务商预设</span>
+            <select id="provider" name="provider"></select>
+            <small id="providerHelp">选择服务商后会自动填入推荐接口和模型。</small>
+          </label>
+
+          <div class="inline-actions provider-actions">
+            <button id="openProviderHome" type="button">打开官网</button>
+            <button id="openApiKey" type="button">获取 API Key</button>
+            <button id="useRecommendedModel" type="button">使用推荐模型</button>
+          </div>
+
+          <label class="field">
+            <span>API 地址</span>
+            <input id="endpoint" name="endpoint" type="url" autocomplete="off" required>
+            <small>词元跳动完整调用地址： https://tokendance.space/gateway/v1/chat/completions</small>
+          </label>
+
+          <label class="field">
+            <span>API Key</span>
+            <input id="apiKey" name="apiKey" type="password" autocomplete="off" placeholder="sk-...">
+          </label>
+
+          <label class="field">
+            <span>最大并发请求数</span>
+            <input id="maxConcurrentRequests" name="maxConcurrentRequests" type="number" min="1" max="10" step="1">
+            <small>所有网页共享这个上限。TokenDance 当前上限为 10；不确定的自定义接口建议先设为 2-4。</small>
+          </label>
+
+          <div class="inline-actions">
+            <button id="fetchModels" class="primary" type="button">保存并拉取模型</button>
+            <button id="refreshModels" type="button">重新拉取模型</button>
+            <button id="test" type="button">测试连接</button>
+          </div>
+        </section>
+
+        <section class="section">
+          <div class="section-title-row">
+            <h2>模型</h2>
+            <span id="modelSummary">尚未拉取</span>
+          </div>
+
+          <label class="field">
+            <span>当前模型 ID</span>
+            <input id="model" name="model" type="text" autocomplete="off" required>
+          </label>
+
+          <div class="model-toolbar">
+            <input id="modelFilter" type="search" placeholder="筛选模型...">
+            <button id="clearFilter" type="button">清空</button>
+          </div>
+
+          <div id="modelList" class="model-list" aria-live="polite"></div>
+        </section>
+
+        <section class="section">
+          <h2>翻译</h2>
+          <div class="split">
+            <label class="field">
+              <span>原文语言</span>
+              <select id="sourceLanguage" name="sourceLanguage">
+                <option value="auto">自动识别</option>
+                <option value="Chinese (Simplified)">中文（简体）</option>
+                <option value="English">英语</option>
+                <option value="Japanese">日语</option>
+                <option value="Korean">韩语</option>
+                <option value="French">法语</option>
+                <option value="German">德语</option>
+                <option value="Spanish">西班牙语</option>
+              </select>
+            </label>
+            <label class="field">
+              <span>目标语言</span>
+              <select id="targetLanguage" name="targetLanguage">
+                <option value="Chinese (Simplified)">中文（简体）</option>
+                <option value="English">英语</option>
+                <option value="Japanese">日语</option>
+                <option value="Korean">韩语</option>
+                <option value="French">法语</option>
+                <option value="German">德语</option>
+                <option value="Spanish">西班牙语</option>
+              </select>
+            </label>
+          </div>
+
+          <label class="field">
+            <span>翻译风格</span>
+            <textarea id="customInstruction" name="customInstruction" rows="4" placeholder="例如：自然、简洁，适合产品界面"></textarea>
+          </label>
+
+          <label class="toggle">
+            <input id="autoSelectionButton" name="autoSelectionButton" type="checkbox">
+            <span>选中文字后显示翻译按钮</span>
+          </label>
+        </section>
+
+        <div class="bar">
+          <button id="save" class="primary" type="submit">保存设置</button>
+          <span id="status" role="status"></span>
+        </div>
+
+        <section class="section result-section">
+          <h2>测试结果</h2>
+          <pre id="testResult"></pre>
+        </section>
+      </form>
+    </main>
+    <script type="module" src="options.js"></script>
+  </body>
+</html>

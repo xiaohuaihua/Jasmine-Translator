@@ -1,0 +1,85 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>花茶翻译器</title>
+    <link rel="stylesheet" href="popup.css">
+  </head>
+  <body>
+    <main class="popup">
+      <header class="header">
+        <div>
+          <h1>花茶翻译器</h1>
+          <p id="statusText">正在读取设置...</p>
+        </div>
+        <button id="openOptions" class="plain-button" type="button">设置</button>
+      </header>
+
+      <section class="language-row">
+        <label class="field compact">
+          <span>原文语言</span>
+          <select id="sourceLanguage">
+            <option value="auto">自动识别</option>
+            <option value="Chinese (Simplified)">中文（简体）</option>
+            <option value="English">英语</option>
+            <option value="Japanese">日语</option>
+            <option value="Korean">韩语</option>
+            <option value="French">法语</option>
+            <option value="German">德语</option>
+            <option value="Spanish">西班牙语</option>
+          </select>
+        </label>
+        <div class="arrow">→</div>
+        <label class="field compact">
+          <span>目标语言</span>
+          <select id="targetLanguage">
+            <option value="Chinese (Simplified)">中文（简体）</option>
+            <option value="English">英语</option>
+            <option value="Japanese">日语</option>
+            <option value="Korean">韩语</option>
+            <option value="French">法语</option>
+            <option value="German">德语</option>
+            <option value="Spanish">西班牙语</option>
+          </select>
+        </label>
+      </section>
+
+      <section class="service-panel">
+        <div class="service-row">
+          <span>翻译服务</span>
+          <strong id="serviceName">词元跳动</strong>
+        </div>
+        <div class="service-row muted">
+          <span>当前模型</span>
+          <span id="modelName">-</span>
+        </div>
+      </section>
+
+      <button id="translatePage" class="primary action-main" type="button">翻译当前页面</button>
+
+      <div class="actions">
+        <button id="translateSelection" type="button">翻译选中</button>
+        <button id="toggleVisibility" type="button">隐藏译文</button>
+        <button id="clearPage" type="button">还原</button>
+      </div>
+
+      <label class="field">
+        <span>当前网站</span>
+        <select id="sitePreference">
+          <option value="manual">手动翻译该网站</option>
+          <option value="always">总是翻译该网站</option>
+          <option value="never">不自动翻译该网站</option>
+        </select>
+      </label>
+
+      <label class="toggle">
+        <input id="autoSelectionButton" type="checkbox">
+        <span>选中文字后显示翻译按钮</span>
+      </label>
+
+      <p id="message" class="message" role="status"></p>
+    </main>
+    <script src="popup.js"></script>
+  </body>
+</html>
