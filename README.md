@@ -73,7 +73,7 @@
 
 ## 服务商配置
 
-默认推荐使用 TokenDance 预设。高级用户也可以填写自定义 OpenAI 兼容接口。
+默认推荐使用 TokenDance 预设。也可以填写自定义 OpenAI 兼容接口。
 
 API Key 保存在浏览器扩展本地存储中。花茶翻译器不提供共享 API Key，也不运营翻译服务器。
 
@@ -174,7 +174,7 @@ During page translation, a small progress capsule appears at the bottom of the p
 
 ## Provider setup
 
-The default preset is TokenDance. Advanced users can also configure a custom OpenAI-compatible endpoint.
+The default preset is TokenDance.  Users can also configure a custom OpenAI-compatible endpoint.
 
 Your API key is stored in your browser extension's local storage. Jasmine Translator does not provide an API key and does not operate a translation server.
 
