@@ -27,29 +27,9 @@ export const PROVIDER_PRESETS = Object.freeze({
     }),
     helpText: "还没有 TokenDance API Key？点击获取 Key，注册并创建后回到这里粘贴。API Key 只保存在你的浏览器本地。"
   }),
-  openai: Object.freeze({
-    id: "openai",
-    label: "OpenAI 官方",
-    shortLabel: "OpenAI",
-    homepageUrl: "https://platform.openai.com",
-    apiKeyUrl: "https://platform.openai.com/api-keys",
-    docsUrl: "https://platform.openai.com/docs",
-    endpoint: "https://api.openai.com/v1/chat/completions",
-    model: "gpt-4o-mini",
-    maxConcurrentRequests: 3,
-    protocol: "openai-chat-completions",
-    modelFetch: Object.freeze({
-      urls: Object.freeze(["https://api.openai.com/v1/models"]),
-      requiresApiKey: true,
-      allowAnonymous: false,
-      timeoutMs: 8000,
-      cacheTtlMs: MODEL_CACHE_TTL_MS
-    }),
-    helpText: "OpenAI 官方接口需要你自己的 API Key。"
-  }),
   custom: Object.freeze({
     id: "custom",
-    label: "自定义 OpenAI 兼容接口",
+    label: "自定义兼容接口",
     shortLabel: "自定义",
     homepageUrl: "",
     apiKeyUrl: "",
@@ -65,7 +45,7 @@ export const PROVIDER_PRESETS = Object.freeze({
       timeoutMs: 8000,
       cacheTtlMs: MODEL_CACHE_TTL_MS
     }),
-    helpText: "填写 OpenAI Chat Completions 兼容接口地址，例如 https://example.com/v1/chat/completions。"
+    helpText: "填写 Chat Completions API 兼容接口地址，例如 https://example.com/v1/chat/completions。"
   })
 });
 

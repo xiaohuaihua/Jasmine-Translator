@@ -414,6 +414,9 @@
     if (tracking.translatedElements.has(element) || tracking.translatingElements.has(element)) {
       return true;
     }
+    if (element.hasAttribute("data-ai-translator-v2-translated")) {
+      return true;
+    }
     if (element.parentElement?.closest("[data-ai-translator-v2-source-text]")) {
       return true;
     }
@@ -422,7 +425,7 @@
   function getViewportScore(rect) {
     const viewportCenter = window.innerHeight * 0.45;
     const elementCenter = rect.top + rect.height / 2;
-    const nearViewport = rect.bottom >= -window.innerHeight * 0.35 && rect.top <= window.innerHeight * 1.8;
+    const nearViewport = rect.bottom >= -window.innerHeight * 0.2 && rect.top <= window.innerHeight * 1.2;
     const distance = Math.abs(elementCenter - viewportCenter);
     return nearViewport ? distance : distance + window.innerHeight * 3;
   }
@@ -651,6 +654,9 @@
       return;
     }
     setBlockResult(job.block, text, loading, isError);
+    if (!loading && !isError) {
+      job.block.setAttribute("data-ai-translator-v2-translated", "true");
+    }
   }
   function removeTranslationResult(job) {
     job.block.removeAttribute("data-ai-translator-v2-pending");
@@ -667,17 +673,35 @@
     }
   }
   function setBlockResult(anchor, text, loading, isError = false) {
-    let node = anchor.nextElementSibling;
+    let node = anchor.querySelector(":scope > [data-ai-translator-v2-result]");
+    if (!node) {
+      node = anchor.nextElementSibling;
+      if (node && !node.hasAttribute("data-ai-translator-v2-result")) {
+        node = null;
+      }
+    }
     if (!loading && !isError && isSameMeaningText(getElementSourceText(anchor), text)) {
-      if (node?.hasAttribute("data-ai-translator-v2-result")) {
+      if (node) {
         node.remove();
       }
       return;
     }
-    if (!node || !node.hasAttribute("data-ai-translator-v2-result")) {
+    if (!node) {
       node = document.createElement("div");
       node.setAttribute("data-ai-translator-v2-result", "true");
-      anchor.insertAdjacentElement("afterend", node);
+      const insertStrategy = getInsertStrategy(anchor);
+      if (insertStrategy === "inside") {
+        anchor.appendChild(node);
+      } else if (insertStrategy === "after-parent") {
+        const parent = findTranslatableParent(anchor);
+        if (parent && parent !== anchor) {
+          parent.insertAdjacentElement("afterend", node);
+        } else {
+          anchor.insertAdjacentElement("afterend", node);
+        }
+      } else {
+        anchor.insertAdjacentElement("afterend", node);
+      }
     }
     node.className = [
       "ai-translator-v2-inline-result",
@@ -685,6 +709,38 @@
       isError ? "is-error" : ""
     ].filter(Boolean).join(" ");
     node.textContent = text;
+  }
+  function getInsertStrategy(element) {
+    if (element.tagName === "DIV" && element.hasAttribute("dir")) {
+      const article = element.closest("article");
+      if (article && window.location.hostname.includes("twitter.com") || window.location.hostname === "x.com") {
+        return "after-parent";
+      }
+    }
+    if (element.tagName === "ARTICLE") return "inside";
+    if (element.classList.toString().match(/tweet|post|status/i)) return "inside";
+    if (["DIV", "SECTION", "MAIN"].includes(element.tagName)) {
+      const childElements = Array.from(element.children).filter(
+        (c) => !c.hasAttribute("data-ai-translator-v2-result") && !c.hasAttribute("data-ai-translator-v2-compact-result")
+      );
+      if (childElements.length > 3) return "inside";
+    }
+    return "after";
+  }
+  function findTranslatableParent(element) {
+    let current = element.parentElement;
+    let depth = 0;
+    while (current && depth < 3) {
+      if (current.hasAttribute("dir") || current.hasAttribute("lang")) {
+        return current;
+      }
+      if (current.tagName === "ARTICLE") {
+        return element;
+      }
+      current = current.parentElement;
+      depth++;
+    }
+    return element;
   }
   function setCompactResult(anchor, text, loading, isError = false) {
     if (loading) {
@@ -743,50 +799,51 @@
     style.id = "ai-translator-v2-inline-style";
     style.textContent = `
     .ai-translator-v2-inline-result {
-      background: rgba(23, 107, 88, 0.08);
-      border-left: 3px solid #176b58;
-      border-radius: 6px;
-      color: #24403a;
-      font-size: 0.96em;
-      line-height: 1.65;
-      margin: 0.45em 0 0.85em;
-      padding: 0.65em 0.85em;
+      /* \u7EE7\u627F\u539F\u7F51\u7AD9\u6837\u5F0F\uFF0C\u770B\u8D77\u6765\u50CF\u539F\u751F\u5185\u5BB9 */
+      color: inherit;
+      font-family: inherit;
+      font-size: inherit;
+      line-height: inherit;
+      margin: 0;
+      padding: 0;
       white-space: pre-wrap;
+      opacity: 0.75;
+      font-style: italic;
     }
 
     .ai-translator-v2-inline-result.is-loading {
-      color: #66736f;
+      opacity: 0.5;
     }
 
     .ai-translator-v2-inline-result.is-error {
-      background: rgba(180, 54, 54, 0.08);
-      border-left-color: #b43636;
-      color: #8f2828;
+      color: #d73a49;
+      opacity: 0.7;
     }
 
     [data-ai-translator-v2-pending="true"] {
-      outline: 1px dashed rgba(23, 107, 88, 0.35);
-      outline-offset: 2px;
+      /* \u65E0\u9AD8\u4EAE */
     }
 
     .ai-translator-v2-compact-result {
-      color: #176b58;
+      /* \u7D27\u51D1\u6A21\u5F0F\uFF1A\u76F4\u63A5\u8DDF\u5728\u539F\u6587\u540E\uFF0C\u7528\u659C\u6760\u5206\u9694 */
+      color: inherit;
       display: inline;
-      font-size: 0.92em;
-      font-weight: 600;
-      margin-left: 0.42em;
+      font-family: inherit;
+      font-size: 0.95em;
+      font-weight: inherit;
+      margin-left: 0.3em;
       white-space: normal;
+      opacity: 0.7;
     }
 
     .ai-translator-v2-compact-result::before {
-      content: "/";
-      color: #8a9792;
-      font-weight: 400;
-      margin-right: 0.42em;
+      content: " / ";
+      color: currentColor;
+      opacity: 0.4;
     }
 
     .ai-translator-v2-compact-result.is-error {
-      color: #8f2828;
+      color: #d73a49;
     }
 
     html[data-ai-translator-v2-hidden] .ai-translator-v2-inline-result,
@@ -932,9 +989,14 @@
       if (document.hidden) {
         window.clearTimeout(pageTranslateTimer);
         pageTranslateTimer = 0;
+        const host2 = document.getElementById(HOST_ID);
+        if (host2) {
+          host2.remove();
+        }
+        pageState.paused = false;
+        pageState.enabled = false;
         return;
       }
-      scheduleContinuousPageTranslation(420);
     }
     function installUrlWatcher() {
       const notifyUrlChange = () => {
@@ -965,7 +1027,7 @@
       resetPageTranslationForNavigation();
     }
     function resetPageTranslationForNavigation() {
-      const shouldContinue = pageState.enabled && !pageState.cancelled;
+      const shouldContinue = false;
       const wasDismissed = pageToastDismissed;
       pageSessionId += 1;
       stopContinuousPageTranslation();

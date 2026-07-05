@@ -185,12 +185,25 @@ import { clearTransientPageErrors, ensureInlineStyles, removePageTranslationMark
     }
 
     if (document.hidden) {
+      // 页面隐藏时：清除定时器，收起弹窗（用户切走了，翻译结束）
       window.clearTimeout(pageTranslateTimer);
       pageTranslateTimer = 0;
+
+      // 如果有弹窗，收起它
+      const host = document.getElementById(HOST_ID);
+      if (host) {
+        host.remove();
+      }
+
+      // 停止翻译，清空状态
+      pageState.paused = false;
+      pageState.enabled = false;
+
       return;
     }
 
-    scheduleContinuousPageTranslation(420);
+    // 页面重新可见时：不自动继续翻译（用户需要手动重新启动）
+    // scheduleContinuousPageTranslation(420); // 删除这行
   }
 
   function installUrlWatcher() {
@@ -229,7 +242,8 @@ import { clearTransientPageErrors, ensureInlineStyles, removePageTranslationMark
   }
 
   function resetPageTranslationForNavigation() {
-    const shouldContinue = pageState.enabled && !pageState.cancelled;
+    // URL 变化视为新页面，需要用户重新授权翻译
+    const shouldContinue = false;
     const wasDismissed = pageToastDismissed;
 
     pageSessionId += 1;

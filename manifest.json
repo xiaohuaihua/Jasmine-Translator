@@ -2,7 +2,7 @@
   "manifest_version": 3,
   "name": "花茶翻译器",
   "description": "轻量的 AI 网页翻译器，支持划词翻译、整页翻译和自带 API Key。",
-  "version": "0.6.0",
+  "version": "0.6.1",
   "icons": {
     "16": "assets/icon-16.png",
     "32": "assets/icon-32.png",
