@@ -6,7 +6,7 @@
 
 ## 📥 下载 / Download
 
-**[点击下载 v0.6.0 发行包 / Download v0.6.0 Release Package](https://github.com/xiaohuaihua/Jasmine-Translator/releases/download/v0.6.0/jasmine-translator-v0.6.0.zip)**
+**[点击下载 v0.6.1 发行包 / Download v0.6.1 Release Package](https://github.com/xiaohuaihua/Jasmine-Translator/releases/download/v0.6.1/jasmine-translator-v0.6.1.zip)**
 
 下载后解压，然后在浏览器扩展页面"加载已解压的扩展程序"，选择解压出来的文件夹即可。
 
